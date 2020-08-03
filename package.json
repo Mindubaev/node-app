@@ -1,0 +1,22 @@
+{
+  "name": "node-demo",
+  "version": "1.0.0",
+  "description": "Demo application",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "debug": "node --nolazy index.js"
+  },
+  "author": "Artur",
+  "license": "ISC",
+  "dependencies": {
+    "connect-pg-simple": "^6.1.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "http": "0.0.1-security",
+    "morgan": "^1.10.0",
+    "pg": "^8.3.0",
+    "sequelize": "^6.3.3"
+  }
+}
