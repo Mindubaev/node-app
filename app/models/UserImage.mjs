@@ -1,19 +1,15 @@
 import sequelizePkg from 'sequelize';
 let {DataTypes}=sequelizePkg;
 
-export const NoteModel={
+export const UserImageModel={
     id:{
         type:DataTypes.INTEGER,
         autoIncrement:true,
         primaryKey:true,
         allowNull:false
     },
-    title:{
-        type:DataTypes.STRING(150),
-        allowNull:true
-    },
-    text:{
-        type:DataTypes.STRING(511),
+    image:{
+        type:DataTypes.BLOB,
         allowNull:true
     }
 }

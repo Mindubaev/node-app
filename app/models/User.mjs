@@ -10,13 +10,11 @@ export const UserModel={
         allowNull:false
     },
     username:{
-        type:DataTypes.STRING,
+        type:DataTypes.STRING(100),
         allowNull:false,
     },
     password:{
-        type:DataTypes.STRING,
+        type:DataTypes.STRING(256),
         allowNull:false,
-
-
     }
 }

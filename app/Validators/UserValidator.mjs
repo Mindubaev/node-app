@@ -1,9 +1,9 @@
 export function newUserIsValid(user){
-    return (idIsValid(user) && usernameIsValid(user) && passwordIsValid(user));
+    return ( usernameIsValid(user) && passwordIsValid(user));
 }
 
 export function userIsValid(user){
-    return (usernameIsValid(user) && passwordIsValid(user));
+    return (idIsValid(user) && usernameIsValid(user) && passwordIsValid(user));
 }
 
 function idIsValid(user){
