@@ -13,6 +13,7 @@ export default class UserController{
         this.handleGetUserImage();
         this.handlePostUserImage();
         this.handleGetUserNotesCount();
+        this.handleGetUserNotesById();
         this.handleGetUserNotes();
         this.handleGetUserById();
         this.handelePostNewUser();
@@ -22,12 +23,6 @@ export default class UserController{
         this.handleGetNotesByUserId();
         this.handlePutUser();
     }
-
-    // static async build (app,userService) {//альтернатива
-    //     let userController=new UserController(app,userService);
-    //     userController.handleGetUser();
-    //     return userController;
-    // }
 
     handleLoginUser(){
         this.app.post("/login",this.jsonParser,async (req,resp)=>{
@@ -118,6 +113,29 @@ export default class UserController{
         });
     }
 
+    handleGetUserNotesById(){
+        this.app.get("/user/:userId/notes",async (req,resp)=>{
+            let userId=Number(req.params.userId);
+            let size=Number(req.query.size);
+            let page=Number(req.query.page);
+            if (!Number.isInteger(userId) ||  (Number.isInteger(userId) && userId<0))
+                resp.sendStatus(400);
+            else{
+                let notes=null;
+                if (Number.isInteger(size) && Number.isInteger(page))
+                    notes= await this.noteService.findByUserIdPageRequest(userId,size,page);
+                else
+                    notes= await this.noteService.findByUserId(userId);
+                if (!notes)
+                    resp.sendStatus(404);
+                else{
+                    resp.status(200);
+                    resp.json(notes);
+                }
+            }
+        });
+    }
+
     handleGetUserById(){
         this.app.get("/user/:userId", async (req,resp)=>{
             let userId=Number(req.params.userId);
@@ -129,7 +147,10 @@ export default class UserController{
                     resp.sendStatus(404);
                 else{
                     resp.status(200);
-                    resp.json({id:user.id,username:user.username});
+                    resp.json({
+                        id:user.id,
+                        username:user.username
+                    });
                 }
             }
         });
@@ -149,8 +170,8 @@ export default class UserController{
                         req.session.user=user;
                         resp.status(200);
                         resp.json({
-                            username:user.username,
-                            password:user.password
+                            id:user.id,
+                            username:user.username
                         });
                     }
                     else
